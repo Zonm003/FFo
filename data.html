@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    background: url('https://i.pinimg.com/originals/cb/4e/79/cb4e79665378231ae9de235fa4767696.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    font-family: sans-serif;
+  }
+  .form-box {
+    background: rgba(255, 255, 255, 0.7);
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 30px;
+    border-radius: 10px;
+  }
+  input { width: 90%; padding: 8px; margin: 10px 0; }
+  button { margin: 5px; }
+</style>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbz80jIPCK1SunVXHvpqGw_cjyhh-ukBo2UL8FhQ64eHaZU0HmReqjY_61mlxu5z33TK/exec";
+
+function submitForm() {
+  const name = document.getElementById("name").value;
+  const stdId = document.getElementById("stdId").value;
+  const email = document.getElementById("email").value;
+
+  if (!email.endsWith("@gmail.com")) {
+    alert("กรุณากรอกอีเมลให้ลงท้ายด้วย @gmail.com");
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append("action", "add");
+  formData.append("name", name);
+  formData.append("stdId", stdId);
+  formData.append("email", email);
+
+  fetch(scriptURL, { method: "POST", body: formData })
+    .then(() => { alert("บันทึกข้อมูลเรียบร้อย"); })
+    .catch(() => { alert("Error!"); });
+}
+</script>
+</head>
+<body>
+  <div class="form-box">
+    <h2>กรอกข้อมูล</h2>
+    <input id="name" type="text" placeholder="ชื่อ - นามสกุล">
+    <input id="stdId" type="text" placeholder="เลขนักศึกษา">
+    <input id="email" type="email" placeholder="gmail เท่านั้น (@gmail.com)">
+    <br>
+    <button onclick="submitForm()">บันทึก</button>
+    <button onclick="location.href='show.html'">ดูข้อมูล</button>
+    <button onclick="location.href='index.html'">กลับหน้าหลัก</button>
+  </div>
+</body>
+</html>

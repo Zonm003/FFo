@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Show Data</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    background: url('https://i.pinimg.com/originals/cb/4e/79/cb4e79665378231ae9de235fa4767696.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    font-family: sans-serif;
+  }
+  .table-box {
+    background: rgba(255, 255, 255, 0.7);
+    width: 80%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { border: 1px solid #000; padding: 8px; text-align: center; }
+</style>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbz80jIPCK1SunVXHvpqGw_cjyhh-ukBo2UL8FhQ64eHaZU0HmReqjY_61mlxu5z33TK/exec";
+
+window.onload = () => {
+  fetch(scriptURL + "?action=list")
+    .then(res => res.json())
+    .then(data => {
+      let html = "<tr><th>ชื่อ - นามสกุล</th><th>เลขนักศึกษา</th><th>อีเมล</th><th>วันที่</th></tr>";
+      data.slice(1).forEach(row => {
+        html += `<tr>
+          <td>${row[0]}</td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>${row[3]}</td>
+        </tr>`;
+      });
+      document.getElementById("tableBody").innerHTML = html;
+    });
+};
+</script>
+</head>
+<body>
+  <div class="table-box">
+    <button onclick="location.href='index.html'">กลับหน้าหลัก</button>
+    <button onclick="location.href='data.html'">กรอกข้อมูล</button>
+    <h2>ข้อมูลจาก Google Sheet</h2>
+    <table>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</body>
+</html>
